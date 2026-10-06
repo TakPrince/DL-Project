@@ -1,0 +1,10 @@
+=== CLASSIFICATION REPORT (TEST SET) ===
+              precision    recall  f1-score   support
+
+       Juice     0.8571    1.0000    0.9231        18
+        Milk     1.0000    0.9444    0.9714        18
+     Yoghurt     1.0000    0.8889    0.9412        18
+
+    accuracy                         0.9444        54
+   macro avg     0.9524    0.9444    0.9452        54
+weighted avg     0.9524    0.9444    0.9452        54

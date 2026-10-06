@@ -1,0 +1,13 @@
+{
+  "class_names": [
+    "Juice",
+    "Milk",
+    "Yoghurt"
+  ],
+  "class_to_idx": {
+    "Juice": 0,
+    "Milk": 1,
+    "Yoghurt": 2
+  },
+  "num_classes": 3
+}
