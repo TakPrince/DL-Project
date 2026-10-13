@@ -304,25 +304,3 @@ http://127.0.0.1:5000
 
 ---
 
-## 11. Viva Voce Preparation Guide
-
-### Q1: Why use a CNN instead of a standard Multi-Layer Perceptron (Dense NN) for images?
-> **Answer:** Fully-connected Dense layers ignore 2D spatial locality and require flattening images into 1D vectors, resulting in millions of redundant parameters. CNNs use shared convolutional filters that exploit translation invariance and spatial locality, extracting local visual features (edges, corners, patterns) regardless of where they appear on the shelf.
-
-### Q2: What is the role of MaxPooling in your architecture?
-> **Answer:** MaxPooling downsamples spatial dimensions (height and width) by taking the maximum value in each $2 \times 2$ window. This reduces computational complexity and parameter count, controls overfitting, and introduces translation invariance (the feature remains recognized even if shifted slightly).
-
-### Q3: Why is `Rescaling` placed inside the model instead of pre-processing images outside?
-> **Answer:** Embedding `layers.Rescaling(1/255.0)` directly into the Keras model makes the model completely self-contained. During production, inference, or Web Demo deployment, callers can feed raw RGB pixel values $[0, 255]$ without risking normalization bugs or distribution mismatches.
-
-### Q4: Why use `sparse_categorical_crossentropy` instead of `categorical_crossentropy`?
-> **Answer:** Our labels are represented as single integer class indices ($0, 1, 2$) rather than one-hot encoded vectors ($[1, 0, 0]$, $[0, 1, 0]$, etc.). `sparse_categorical_crossentropy` operates directly on integer labels, saving memory without needing one-hot encoding.
-
-### Q5: Why is `shuffle=False` critical for validation and test datasets?
-> **Answer:** During evaluation, predictions are generated sequentially batch by batch. If the test set were shuffled, the order of true labels extracted from the dataset would not correspond to the sequential prediction indices, causing completely distorted confusion matrices and classification reports.
-
-### Q6: How does Dropout prevent overfitting?
-> **Answer:** `Dropout(0.5)` randomly deactivates 50% of the neurons in the dense layer during each training forward pass. This forces the network to learn redundant, robust feature representations rather than co-adapting and memorizing individual training sample quirks. Dropout is automatically deactivated during evaluation and inference.
-
-### Q7: How does this classification system relate to real Kirana store inventory automation?
-> **Answer:** In a real store, an object detector (e.g., YOLO) would first detect and crop each bounding box representing an item on the shelf. This CNN classifier would then classify the cropped box into its product category (`Juice`, `Milk`, `Yoghurt`) to update inventory counts automatically.
